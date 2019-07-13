@@ -9,10 +9,10 @@ This project is open-sourced under MIT License.
 [[Image:fonts2.png]]
 
 
-**Font Resources:**
-## Thamizha Tamil fonts: 
-  https://github.com/thamizha/tamil-fonts
-## Tamil Fonts for various encodings
-  http://tamilnation.co/digital/Tamil%20Fonts%20%26%20Software.htm#Unicode_Fonts
-## Apple Mac OS-X
-  https://support.apple.com/en-us/HT206872#download
+##Font Resources:
+1. Thamizha Tamil fonts: 
+   https://github.com/thamizha/tamil-fonts
+2. Tamil Fonts for various encodings
+   http://tamilnation.co/digital/Tamil%20Fonts%20%26%20Software.htm#Unicode_Fonts
+3. Apple Mac OS-X
+   https://support.apple.com/en-us/HT206872#download
