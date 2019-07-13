@@ -9,7 +9,7 @@ This project is open-sourced under MIT License.
 [[Image:fonts2.png]]
 
 
-##Font Resources:
+## Font Resources:
 1. Thamizha Tamil fonts: 
    https://github.com/thamizha/tamil-fonts
 2. Tamil Fonts for various encodings
