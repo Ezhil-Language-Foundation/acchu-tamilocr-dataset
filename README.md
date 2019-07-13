@@ -4,7 +4,9 @@
 Uyir, Mei, Uyirmei for 347 letter forms so that we are able to train classifiers
 based on this data.
 
-This project will be open-sourced.
+This project is open-sourced under MIT License.
+[[Image:fonts1.png]]
+[[Image:fonts2.png]]
 
 
 **Font Resources:**
