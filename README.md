@@ -5,8 +5,8 @@ Uyir, Mei, Uyirmei for 347 letter forms so that we are able to train classifiers
 based on this data.
 
 This project is open-sourced under MIT License.
-![tamil letters](font1.png)
-![tamil fonts rendered via Python](font2.png)
+![tamil letters rendered in Meera font](all-letters.png)
+![tamil fonts rendered via Python](font1.png)
 
 
 ## Font Resources:
