@@ -31,5 +31,8 @@ This project is open-sourced under MIT License.
 1. Algorithm can use existing fonts with 20k set with rotation, 20kset with translation and 20k set with both rotation and translation in any order.
 2. This will use a round-robin queue based method to train the data.
 3. Roundrobin method provides 4616 samples of each label - pretty uniform.
+4. Only 35 fonts of my collected data are suitable for Unicode processing.
+    TAM/TAB fonts are nice but have significant overhead at this time.
+
 ## Memory capabilities
 1. Matrix size of floats 60000x784 is easily loaded with size of 324MB in RAM.

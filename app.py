@@ -8,11 +8,7 @@ from pprint import pprint
 #import unicodedata
 import sys, os
 import random
-from fontdb import get_font_names
-from collections import namedtuple
-
-
-FontType = namedtuple('FontType',('name','path','L','M'))
+from fontdb import get_font_names, FONTDB
 MNIST_R = 60000
 W=28
 H=W
@@ -24,17 +20,7 @@ def img2array(img):
     return np.array(bytes).reshape(W*H)
 
 # 0) setup font db and regular/smalls across available fonts.
-FONTDB={}
-def build_fontdb():
-    for fontpath in get_font_names():
-        fontname = fontpath.split('/')[-1]
-        name = fontname.split('.')[0]
-        fontL= ImageFont.truetype(fontpath, fsize[1], encoding="uni")
-        fontM=ImageFont.truetype(fontpath, fsize[2], encoding="uni")
-        FONTDB[name] = FontType(name,fontname,fontL,fontM)
-build_fontdb()
-assert len(FONTDB) == len(get_font_names())
-#assert len(get_font_names()) == 44 #44 fonts available today
+#we skip TAM, TAB fonts.
 
 # 1) Setup letters to be built
 uyir_plus_ayutham = copy.copy(tamil.utf8.uyir_letters)
@@ -47,7 +33,6 @@ data_label = np.zeros((MNIST_R,1))
 n_rows = 0
 def print_completion():
     print("Completed %g%%"%(n_rows/float(MNIST_R)*100.0))
-
 
 # 2) Build set given a font specification and return an array of 13-row images and Labels
 def build_letter_set(fontobj,rotate=False,translate=False):
