@@ -1,2 +1,3 @@
 Pillow==5.4.1
 Open-Tamil==0.9
+numpy
