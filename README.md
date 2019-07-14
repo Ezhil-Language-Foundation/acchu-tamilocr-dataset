@@ -1,7 +1,9 @@
-
 # அச்சு தமிழ் எழுத்துணரி செயற்கை நூண்ணறிவு பயிற்சித் தரவுத்தளம் உருவாக்கும் திட்டம்
 **Project is to generate labeled data sets of Tamil letters**
 Uyir, Mei, Uyirmei for 347 letter forms so that we are able to train classifiers based on this data.
+
+# தமிழ் அரிச்சுவடி
+![composite training data](composite.png)
 
 This project is open-sourced under MIT License.
 ![tamil letters rendered in Meera font](all-letters.png)
