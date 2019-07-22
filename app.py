@@ -86,8 +86,10 @@ def main():
             pos += 1
         print("Added %d rows (total %d / %d)"%(pos,n_rows,MNIST_R))
         #print_completion()
+    data_label_onehot = np.zeros((max(data_label.shape),13))
+    for idx,pos in enumerate(data_label): data_label_onehot[idx][int(pos)]=1.0;
     np.save(os.path.join( os.getcwd(),'data','train-image-'+str(time.time())),data_image)
-    np.save(os.path.join( os.getcwd(),'data','train-label-'+str(time.time())),data_label)
+    np.save(os.path.join( os.getcwd(),'data','train-label-'+str(time.time())+'-onehot'),data_label_onehot)
 
 def draw_composite():
     #run after main.
