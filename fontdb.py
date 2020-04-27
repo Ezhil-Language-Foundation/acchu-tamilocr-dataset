@@ -13,7 +13,7 @@ def get_font_names():
 
 # 0) setup font db and regular/smalls across available fonts.
 FONTDB={}
-fsize= [24,24,18] #fontsize
+fsize= [24,92,18] #fontsize
 def build_fontdb():
     for fontpath in get_font_names():
         fontname = fontpath.split('/')[-1]
