@@ -1,19 +1,22 @@
 #!/usr/bin/python3
 from PIL import ImageFont, ImageDraw, Image
 import time
-from fontdb import FONTDB
-from paper import USLetter
+from fontdb import FONTDB, get_font_like
+from paper import USLetter, A4
 from tamil import utf8
 
+paper = A4()
 paper = USLetter()
 
 #font32= ImageFont.truetype("/Library/fonts/InaiMathi-MN.ttc", "32", encoding="uni")
 
 i=0;
-for font_name,fobj  in FONTDB.items():
-    i+=1
-    if i < 6: continue #Arial Unicode. Font size = 92,
-    print(font_name)
+#for font_name,fobj  in FONTDB.items():
+#    i+=1
+#    if i < 6: continue #Arial Unicode. Font size = 92,
+#   print(font_name)
+if True:
+    fobj = get_font_like("InaiMathi")
     #font_name = font32
     size = list(map(int,paper.canvas()))
     size[0]//=2
@@ -37,7 +40,7 @@ for font_name,fobj  in FONTDB.items():
             draw.line((x,0,x,H),fill=(0,255,0,255))
             draw.line((0,y,W,y),fill=(0,0,255,255))
             draw.text((x+offW, y+offH), letter, **kwargs)
-
+    image.save("demo.png")
     image.show()
     time.sleep(2)
-    break
+    #break

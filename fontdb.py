@@ -23,5 +23,11 @@ def build_fontdb():
         FONTDB[name] = FontType(name,fontname,fontL,fontM)
 build_fontdb()
 
+def get_font_like(name_hint):
+        for name,font in FONTDB.items():
+            if name.find(name_hint) >= 0:
+                return font
+        raise Exception("Cannot find font {0}".format(name_hint))
+
 if __name__ == "__main__":
     pprint(get_font_names())
