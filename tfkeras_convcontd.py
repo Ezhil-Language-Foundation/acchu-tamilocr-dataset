@@ -14,7 +14,17 @@ def load_acchu_data(mode='train'):
     images_path = os.path.join(path,'data',mode+'-image.npy')
     labels = np.load(labels_path)
     images = np.load(images_path)
-    return labels,images
+    # skip the rows which are more than 2 sides exceeding boundary.
+    keep_rows = []
+    for i in range(images.shape[0]):
+        img = images[i,:].reshape(28,28)
+        hasTopFilled=any(img[0,:])
+        hasBotFilled=any(img[27,:])
+        hasLeftFilled=any(img[:,0])
+        hasRightFilled=any(img[:,27])
+        if sum([hasBotFilled, hasTopFilled, hasLeftFilled, hasRightFilled]) < 2:
+            keep_rows.append(i)
+    return labels[keep_rows,:],images[keep_rows,:]
 
 batch_size = 128
 num_classes = 13
@@ -24,12 +34,19 @@ epochs = 200
 img_rows, img_cols = 28, 28
 
 # the data, split between train and test sets
-y_train, x_train  = load_acchu_data('train')
-y_test, x_test    = load_acchu_data('test')
+y_train, x_train  = load_acchu_data('test') #x-train.
+y_test, x_test    = load_acchu_data('train')
 
 x_train = x_train.reshape(len(x_train), img_rows, img_cols,1)
 x_test = x_test.reshape(len(x_test), img_rows, img_cols,1)
 input_shape = (img_rows, img_cols,1)
+
+half = x_test.shape[0]//2
+
+x_train = np.concatenate(np.array([x_train,x_test[0:half,:]]),0)
+y_train = np.concatenate(np.array([y_train,y_test[0:half,:]]),0)
+x_test = x_test[half+1:,:]
+y_test = y_test[half+1:,:]
 
 x_train = x_train.astype('float32')
 x_test = x_test.astype('float32')
@@ -39,7 +56,7 @@ print('x_train shape:', x_train.shape)
 print(x_train.shape[0], 'train samples')
 print(x_test.shape[0], 'test samples')
 
-model = keras.models.load_model('acchu_conv_model_4')
+model = keras.models.load_model('acchu_conv3_model')
 
 model.fit(x_train, y_train,
           batch_size=batch_size,
@@ -49,4 +66,4 @@ model.fit(x_train, y_train,
 score = model.evaluate(x_test, y_test, verbose=1)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
-model.save('acchu_conv_model_5')
+model.save('acchu_conv3_model_2')

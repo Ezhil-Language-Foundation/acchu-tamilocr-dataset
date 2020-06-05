@@ -9,15 +9,16 @@ from pprint import pprint
 import sys, os
 import random
 from fontdb import get_font_names, FONTDB
-MNIST_R = 60000
+MNIST_R = 1000
 W=28
 H=W
-fsize= [24,24,18] #fontsize
+Wtgt=28
+Htgt=Wtgt
 def img2array(img):
     igray = img.convert('L')
     #pprint(igray.tobytes())
     bytes = [ (float(val) > 0.0)*255.0 for val in igray.tobytes() ]
-    return np.array(bytes).reshape(W*H)
+    return np.array(bytes).reshape(Wtgt*Htgt)
 
 # 0) setup font db and regular/smalls across available fonts.
 #we skip TAM, TAB fonts.
@@ -27,7 +28,7 @@ uyir_plus_ayutham = copy.copy(tamil.utf8.uyir_letters)
 uyir_plus_ayutham.append( tamil.utf8.ayudha_letter )
 
 # 1.1) Initialize MNIST variables
-data_image = np.zeros((MNIST_R,W*H))
+data_image = np.zeros((MNIST_R,Wtgt*Htgt))
 data_label = np.zeros((MNIST_R,1))
 
 n_rows = 0
@@ -52,19 +53,20 @@ def build_letter_set(fontobj,rotate=False,translate=False):
             font = fontobj.L
         tw,th=(draw.textsize(u,font=font))
         tw,th = min(tw,W), min(th,H)
-        draw.text(((W-tw)/2,0),u, font=font,fill=(255,255,255,255))
+        draw.text(((W-tw)/4,0),u, font=font,fill=(255,255,255,255))
         if translate:
             # +/-5 on X,Y centered
-            tvec =np.floor(np.random.random((2))*10-5)
+            tvec =np.floor(np.random.random((2))*5-2)
         else:
             tvec = np.zeros((2))
         tvec = (tvec[0],tvec[1])
-        if rotate:
+        if rotate and u not in [tamil.utf8.uyir_letters[-1], tamil.utf8.ayudha_letter]:
+            # cannot rotate Aytham letter due to 28x28 square
             theta=random.choice(range(-15,15))
             image = image.rotate(theta,translate=tvec)
         if rotate or translate:
             image=image.crop([0,0,W,H])
-        image=image.resize((W,H),Image.BILINEAR)
+        #image=image.resize((Wtgt,Htgt),Image.BILINEAR)
         data_img[pos,:] = img2array(image)
         data_lbl[pos] = idx
     return data_img,data_lbl
@@ -88,8 +90,8 @@ def main():
         #print_completion()
     data_label_onehot = np.zeros((max(data_label.shape),13))
     for idx,pos in enumerate(data_label): data_label_onehot[idx][int(pos)]=1.0;
-    np.save(os.path.join( os.getcwd(),'data','train-image-'+str(time.time())),data_image)
-    np.save(os.path.join( os.getcwd(),'data','train-label-'+str(time.time())+'-onehot'),data_label_onehot)
+    np.save(os.path.join( os.getcwd(),'data','train-image-'+str(time.time())),data_image.astype(np.uint8))
+    np.save(os.path.join( os.getcwd(),'data','train-label-'+str(time.time())+'-onehot'),data_label_onehot.astype(np.uint8))
 
 def draw_composite():
     #run after main.
