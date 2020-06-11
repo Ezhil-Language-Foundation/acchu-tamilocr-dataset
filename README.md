@@ -9,6 +9,13 @@ This project is open-sourced under MIT License.
 ![tamil letters rendered in Meera font](all-letters.png)
 ![tamil fonts rendered via Python](font1.png)
 
+# Keras Models - ஆழக்கற்றல் மாதிரிகள் உருவாக்குதல்
+1.  tfkeras_demo.py என்ற நிரல் கேராஸ் - டென்சார்ஃப்ளோ திரட்டின் வழி உருவாக்கலாம். இது CNN என்ற செயற்கைப்பின்னல் வழி 92% சரிவர பயிற்சி தரவிலும் 82% பரிசோதனைத்தரவிலும் சிறப்பாக செயல்படுகிறது.
+    tfkeras_demo.py will train a simple 2-layer CNN for 92% training and 82% test accuracy.
+
+# Outliers - சரியில்லாத சில தரவுபடங்கள்.
+1. சில தரவிலுள்ள படங்களின் உருவங்கள் சரிவர இல்லாமல் உள்ளது. அதாவது எழுத்து வடிவ படம் 28x28 சதுரத்தி கொள்ளாமல் வெட்டுப்பட்டும், சட்டத்தில் வெளியில் "சிந்தியது போல்" காட்சிப்பட்டிருக்கும். இது சரியான பயிற்சிப்படம் இல்லை. இவற்றை outliers என்று கொண்டு இவற்றில் பயிற்சி தரவில் இருந்து நீக்கப்படவேண்டும்.
+
 ## Font Resources:
 1. Thamizha Tamil fonts:
    https://github.com/thamizha/tamil-fonts
