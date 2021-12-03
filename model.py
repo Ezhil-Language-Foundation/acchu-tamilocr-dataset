@@ -20,7 +20,7 @@ def load_mnist_data():
 
 # build model
 batch_size = 128
-num_classes = 10
+num_classes = 13
 epochs = 12
 
 # input image dimensions
@@ -62,17 +62,17 @@ y_train = tensorflow.keras.utils.to_categorical(y_train, num_classes)
 y_test = tensorflow.keras.utils.to_categorical(y_test, num_classes)
 
 model = Sequential()
-#model.add(Conv2D(32, kernel_size=(3, 3),
-#                 activation='relu',
-#                 input_shape=input_shape))
-#model.add(Conv2D(64, (3, 3), activation='relu'))
-#model.add(MaxPooling2D(pool_size=(2, 2)))
-#model.add(Dropout(0.25))
-model.add(Activation(128, input_shape=input_shape))
-#model.add(Flatten())
-#model.add(Dense(128, activation='relu'))
+model.add(Conv2D(32, kernel_size=(3, 3),
+                 activation='relu',
+                 input_shape=input_shape))
+model.add(Conv2D(64, (3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.25))
+model.add(Activation('relu', input_shape=input_shape))
+model.add(Flatten())
+model.add(Dense(128, activation='relu'))
 model.add(Dropout(0.5))
-#model.add(Dense(num_classes, activation='softmax'))
+model.add(Dense(num_classes, activation='softmax'))
 
 from tensorflow.keras.optimizers import RMSprop
 

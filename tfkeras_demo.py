@@ -36,8 +36,17 @@ img_rows, img_cols = 28, 28
 
 # the data, split between train and test sets
 y_train, x_train  = load_acchu_data('train')
+nrows = len(y_train)
+ntrain = int(nrows*0.75)
+ntest = nrows - ntrain
+print('test - train split: ',ntrain,ntest)
+y_test = y_train[ntrain+1:,:]
+x_test = x_train[ntrain+1:,:]
+
+y_train = y_train[:ntrain,:]
+x_train = x_train[:ntrain,:]
+
 print("Train rows = {0}".format(y_train.shape[0]))
-y_test, x_test    = load_acchu_data('test')
 print("Test rows = {0}".format(y_test.shape[0]))
 
 x_train = x_train.reshape(len(x_train), img_rows, img_cols,1)
@@ -56,42 +65,17 @@ print(x_test.shape[0], 'test samples')
 #y_train = keras.utils.to_categorical(y_train, num_classes)
 #y_test = keras.utils.to_categorical(y_test, num_classes)
 
-if True:
-    #Conv model type-1 / larger (double convolution depth.)
-    model = Sequential()
-    model.add(Conv2D(64, kernel_size=(3, 3),
-                     activation='relu',
-                     input_shape=input_shape))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Conv2D(128, kernel_size=(3, 3),
-                     activation='relu'))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Flatten(input_shape=(128,num_classes)))
-    model.add(Dense(num_classes, activation='softmax'))
-elif False:
-    model = Sequential()
-    model.add(
-        Conv2D(32, (3, 3), padding='same', activation='relu',
-               input_shape=input_shape, kernel_regularizer=l2(0.01)))
-    model.add(MaxPooling2D((2, 2)))
-    model.add(Dropout(0.25))
-    model.add(Conv2D(64, (3, 3), activation='relu'))
-    model.add(MaxPooling2D((2, 2)))
-    model.add(Dropout(0.25))
-    model.add(Conv2D(64, (3, 3), activation='relu'))
-    model.add(MaxPooling2D((2, 2)))
-    model.add(Dropout(0.25))
-    model.add(Flatten())
-    model.add(Dense(64, activation='relu', kernel_regularizer=l2(0.01)))
-    model.add(Dropout(0.5))
-    model.add(Dense(13, activation='softmax'))
-else:
-    model = keras.Sequential([
-    keras.layers.Flatten(input_shape=(28, 28)),
-    keras.layers.Dense(1024, activation='relu'),
-    keras.layers.Dense(512, activation='relu'),
-    keras.layers.Flatten(input_shape=(512, num_classes)),
-    keras.layers.Dense(num_classes,activation='softmax')])
+#Conv model type-1 / larger (double convolution depth.)
+model = Sequential()
+model.add(Conv2D(64, kernel_size=(3, 3),
+                 activation='relu',
+                 input_shape=input_shape))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Conv2D(128, kernel_size=(3, 3),
+                 activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Flatten(input_shape=(128,num_classes)))
+model.add(Dense(num_classes, activation='softmax'))
 
 model.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adadelta(),
